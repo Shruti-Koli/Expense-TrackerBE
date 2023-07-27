@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="center">
+        <div class="container">
+            <div class="text">
+                Forgot Password?
+            </div>
+            <form onsubmit="forgotpassword(event)">
+                <div class="data">
+                    <label>Email</label>
+                    <input type="text" name="email" id="email" required>
+                </div>
+                <div class="btn">
+                    <div class="inner"></div>
+                    <button type="submit">Send Reset Password Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        async function forgotpassword(e) {
+            try{
+                e.preventDefault();
+                const userDetails = {
+                    email: event.target.email.value
+                }
+
+                console.log('userDetails',userDetails)
+
+                const response = await axios.post('http://localhost:3000/password/forgotpassword',userDetails)
+                if(response.status === 202){
+                    alert('Password Reset link sent successfully!');
+                    window.location.href = '../login.html';
+                } else {
+                    throw new Error('Something went wrong!!!')
+                }
+            }catch(err){
+                if(err.response==undefined){
+                document.body.innerHTML=`<div class="error_box-container"><div class="error_box">${err}</div></div>`+ document.body.innerHTML;
+                }else{
+                
+                document.body.innerHTML=`<div class="error_box-container"><div class="error_box">${err.response.data.message}</div></div>`+ document.body.innerHTML;
+                }
+                const errbox= document.getElementsByClassName('error_box');
+                for(let i=0;i<errbox.length;i++){
+                setTimeout(()=>{
+                    errbox[i].style.display ='none';},3000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

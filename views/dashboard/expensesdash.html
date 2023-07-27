@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <nav style="position: fixed;">
+    <ul>
+        <li><button onclick="location.href='./expensesdash.html'">Home</button></li>
+        <li><button onclick="showReports(event)">&#128081;Reports</button></li>
+        <li><button onclick="leaderBoard(event)">&#128081;Leader Board</button></li>
+        <li><button id="premium">&#128081;Buy Premium&#128081;</button></li>
+        <li><button id="paid">You are a Premium User</button></li>
+        <li><a href="../Login/login.html">Logout</a></li>
+    </ul>
+  </nav>
+  <div class="content" id="content">
+    <h1>Expense Tracker</h1>
+    <form id="expenseForm" onsubmit="addExpense(event)">
+      <label for="price">Money Spent:</label>
+      <input type="number" id="price" name="price" step="0.01">
+
+      <label for="descr">Description:</label>
+      <input type="text" id="descr" name="descr" required>
+
+      <label for="category">Category:</label>
+      <select id="category" name="category" required>
+        <option value="" disabled selected>Select a category</option>
+        <option value="Food">Food</option>
+        <option value="Petrol">Petrol</option>
+        <option value="Salary">Salary</option>
+        <option value="Travel">Travel</option>
+        <option value="Utility">Utility</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <button type="submit">Add Expense</button>
+    </form>
+    <div class="visibleid">
+      
+      <label for="pageSizeSelector">Choose number of entries per page:</label>
+      <select name="pageSizeSelector" id="pageSizeSelector" onchange="pageSelectorChanged(event)">
+        <option value="3" selected>3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+      </select> 
+     </div>
+    <table id="expenseTable">
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="expenseList">
+      </tbody>
+    </table>
+    <div id="pagination"></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <script src="expensesindex.js"></script>
+</body>
+</html>
+
+

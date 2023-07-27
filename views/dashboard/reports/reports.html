@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <nav>
+        <ul>
+            <li><button onclick="location.href='../expensesdash.html'">Home</button></li>
+            <li><button onclick="location.href=`./reports.html`">&#128081;Reports</button></li>
+            <li><button onclick="location.href=`../leaderBoard/leaderBoard.html`">&#128081;Leader Board</button></li>
+            <li><button id="paid">You are a Premium User</button></li>
+            <li><a href="../../Login/login.html">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="content" id="content">
+        <div class="bcontent" id="bcontent">
+          <div class="download-btn">
+            <button onclick="downloadBtn(event)" id="downloadexpense">&#11167;Download Expenses</button>
+          </div>
+        </div>
+        <h2>Previous Download links</h2>
+        <table id="reportsTable">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody id="reportsList">
+          </tbody>
+        </table>
+      </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded",async ()=>{
+          try{
+              const token = localStorage.getItem('token');
+              const userReportsArray = await axios.get('http://localhost:3000/premium/getoldreports', {headers:{"auth":token}})
+              console.log(userReportsArray.data);
+  
+              for(let i=0;i<userReportsArray.data.length;i++){
+                const time = userReportsArray.data[i].updatedAt.substring(0,16).replace("T", " ");
+                const url = userReportsArray.data[i].fileURL
+                showItemOnScreen(time,url)
+              }
+          }catch(err){
+              console.log(err);
+              showError(err);
+          }
+      })   
+      
+      async function downloadBtn(e){
+        try{
+              const token = localStorage.getItem('token');
+              console.log("requested");
+              console.log(token)
+              const userReport = await axios.get('http://localhost:3000/premium/getfile', {headers:{"auth":token}})
+              //console.log(userReport.data);
+              const time = userReport.data.prevdata.updatedAt.substring(0,16).replace("T", " ");
+              const url = userReport.data.fileURL
+              //console.log(userReport.data.prevdata.updatedAt.substring(0,16).replace("T", " "));
+              //console.log(userReport.data.fileURL);
+              showItemOnScreen(time,url)
+              window.location.href=url;
+          }catch(err){
+              console.log(err);
+              showError(err);
+          }
+      }
+
+      function showItemOnScreen(time,url){
+          const displist = document.getElementById('reportsList');
+  
+          displist.innerHTML = `<tr>
+              <td class='url'>${time}</td>
+              <td><a href=${url}>click here to download</a></td>
+              </tr>` + displist.innerHTML
+      }
+  
+      function showError(err){
+        const content = document.getElementById('content');
+        if(err.response==undefined){
+          content.innerHTML=`<div class="error_box-container"><div class="error_box">${err}</div></div>`+ content.innerHTML;
+        }else{
+          content.innerHTML=`<div class="error_box-container"><div class="error_box">${err.response.data.message}</div></div>`+ content.innerHTML;
+        }
+        const errbox= document.getElementsByClassName('error_box');
+        for(let i=0;i<errbox.length;i++){
+          setTimeout(()=>{
+          errbox[i].style.display ='none';},3000);
+        }
+      }
+    </script>
+  </body>
+</html>
+
+  

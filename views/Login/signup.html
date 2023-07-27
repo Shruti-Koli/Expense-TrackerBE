@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+    <link rel="stylesheet" href="loginstyle.css">
+</head>
+<body>
+    <div class="center">
+        <div class="container">
+        <div class="text">
+            Sign Up Form
+        </div>
+        <form onsubmit="onsignup(event)" autocomplete="on">
+            <div class="data">
+                <label>Name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="data">
+                <label>Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="data">
+                <label>Password</label>
+                <input type="password" name="pass" id="pass" required>
+            </div>
+            <div class="btn">
+                <div class="inner"></div>
+                <button type="submit">Sign Up</button>
+            </div>
+            <div class="signup-link">
+                Already a member? <a href="./login.html">Log In</a>
+            </div>
+        </form>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        async function onsignup(event){
+          event.preventDefault();
+          try{
+              let myobj = {
+                  name: event.target.name.value,
+                  email: event.target.email.value,
+                  pass: event.target.pass.value
+              }
+
+              let op = await axios.post("http://localhost:3000/user/signup",myobj);
+              console.log(op.status);
+              if(op.status==201){
+                alert('Sign up successful');
+                window.location.href= './login.html';
+              }else{
+                throw new Error('failed to signup');
+              }
+          }catch(err){
+            if(err.response==undefined){
+              document.body.innerHTML=`<div class="error_box-container"><div class="error_box">${err}</div></div>`+ document.body.innerHTML;
+            }else{
+              
+              document.body.innerHTML=`<div class="error_box-container"><div class="error_box">${err.response.data.message}</div></div>`+ document.body.innerHTML;
+            }
+            const errbox= document.getElementsByClassName('error_box');
+            for(let i=0;i<errbox.length;i++){
+              setTimeout(()=>{
+                errbox[i].style.display ='none';},3000);
+            }
+          }   
+    }
+
+    </script>
+</body>
+</html>

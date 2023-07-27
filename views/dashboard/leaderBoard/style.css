@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+  *{
+      font-family: 'Poppins', sans-serif;
+  }
+  body {
+    margin: 0px;
+    background: linear-gradient(115deg, #56d8e4 10%, #f55ee6 90%);
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 100% 100%;
+  }
+  .content{
+    margin: 20px;
+    background: linear-gradient(115deg, #56d8e4 10%, #f55ee6 90%);
+  }
+  nav {
+    background-color: #e179f6;
+    color: #fff;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.21);
+
+}
+
+nav ul li {
+    margin: 0 15px;
+    padding: 5px;
+}
+
+nav ul li button {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-top: 0px;
+    background-color: #e179f6;
+    border: none;
+}
+nav ul li button:hover {
+  background-color: #fe43cd;
+}
+nav ul li a:hover {
+    background-color: #fe43cd;
+}
+  h1 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  label,
+  select,
+  input {
+    margin: 5px 0;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  /* Responsive styles for phone screens */
+  @media (max-width: 600px) {
+    body {
+      margin: 10px;
+    }
+  
+    form {
+      max-width: 100%;
+    }
+  
+    th,
+    td {
+      font-size: 14px;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+  }
+
+  .error_box-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .error_box{
+    font-size: large;
+    font-weight: 600;
+    border: 7px double white;
+    color: red;
+    text-align: center;
+    display: inline-block;
+  }

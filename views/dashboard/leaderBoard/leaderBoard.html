@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leader Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><button onclick="location.href='../expensesdash.html'">Home</button></li>
+            <li><button onclick="location.href=`../reports/reports.html`">&#128081;Reports</button></li>
+            <li><button onclick="location.href=`./leaderBoard.html`">&#128081;Leader Board</button></li>
+            <li><button id="paid">You are a Premium User</button></li>
+            <li><a href="../../Login/login.html">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="content" id="content">
+      <table id="expenseTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Total Expenses</th>
+          </tr>
+        </thead>
+        <tbody id="userList">
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+    window.addEventListener("DOMContentLoaded",async ()=>{
+        try{
+            const token = localStorage.getItem('token')
+            console.log(token)
+            const userLeaderBoardArray = await axios.get('http://localhost:3000/premium/showLeaderBoard', {headers:{"auth":token}})
+            console.log(userLeaderBoardArray.data);
+
+            for(let i=0;i<userLeaderBoardArray.data.length;i++){
+              showItemOnScreen(userLeaderBoardArray.data[i]);
+            }
+        }catch(err){
+            console.log(err);
+            showError(err);
+        }
+    })   
+
+    function showItemOnScreen(obj){
+        const displist = document.getElementById('userList');
+
+        displist.innerHTML = displist.innerHTML +`<tr id='${obj.id}'>
+            <td>${obj.name}</td>
+            <td>${obj.totalExpense}</td>
+            </tr>`
+    }
+
+    function showError(err){
+      const content = document.getElementById('content');
+      if(err.response==undefined){
+        content.innerHTML=`<div class="error_box-container"><div class="error_box">${err}</div></div>`+ content.innerHTML;
+      }else{
+        content.innerHTML=`<div class="error_box-container"><div class="error_box">${err.response.data.message}</div></div>`+ content.innerHTML;
+      }
+      const errbox= document.getElementsByClassName('error_box');
+      for(let i=0;i<errbox.length;i++){
+        setTimeout(()=>{
+        errbox[i].style.display ='none';},3000);
+      }
+    }
+    </script>
+</body>
+</html>
