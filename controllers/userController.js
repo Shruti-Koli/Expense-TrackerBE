@@ -52,7 +52,7 @@ const login = async(req,res,next)=>{
               res.status(201).json({success:true,message:"Successfully loggedIn", token:generateToken(user[0].id, user[0].name, user[0].ispremiumuser)})
             }else{
               res.status(401).json({success:false,message:"Password is incorrect"})
-          }
+            }
           });
         }
         else{
