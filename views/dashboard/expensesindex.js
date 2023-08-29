@@ -107,7 +107,7 @@ function pageSelectorChanged(e){
 //get data from backend
 async function getData(page,pageSize,token){
   try{
-    const listE = await axios.get(`http://localhost:3000/expense/get-expenses?page=${page}&pageSize=${pageSize}`,{headers:{"auth":token}});
+    const listE = await axios.get(`http://16.171.196.132:3000/expense/get-expenses?page=${page}&pageSize=${pageSize}`,{headers:{"auth":token}});
     console.log('htmlget');
     console.log(listE.data.allExpenses);
     console.log(listE.data);
@@ -138,7 +138,7 @@ async function addExpense(event){
             descr:descr,
             category:category
         }
-        const item = await axios.post("http://localhost:3000/expense/add-expense",obj,{headers:{"auth":token}})
+        const item = await axios.post("http://16.171.196.132:3000/expense/add-expense",obj,{headers:{"auth":token}})
         
         const selector = document.getElementById('pageSizeSelector');
         const pageSize=selector.value;
@@ -169,7 +169,7 @@ async function deleteExpense(id,descr,category,price){
     try{
         const token = localStorage.getItem('token');
         console.log(id);
-        let res= await axios.delete("http://localhost:3000/expense/delete-expense/"+id,{headers:{"auth":token}});
+        let res= await axios.delete("http://16.171.196.132:3000/expense/delete-expense/"+id,{headers:{"auth":token}});
         console.log('deletedfrom be')
         const selector = document.getElementById('pageSizeSelector');
         const pageSize=selector.value;
@@ -200,14 +200,14 @@ function showError(err){
   //add premium features
 document.getElementById('premium').onclick = async function (e) {
   const token = localStorage.getItem('token')
-  const response  = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: {"auth" : token} });
+  const response  = await axios.get('http://16.171.196.132:3000/purchase/premiummembership', { headers: {"auth" : token} });
   console.log(response);
   var options ={
     "key": response.data.key_id, // Enter the Key ID generated from the Dashboard
     "order_id": response.data.order.id,// For one time payment
     // This handler function will handle the success payment
     "handler": async function (response) {
-        const res = await axios.post('http://localhost:3000/purchase/updatetransactionstatus',{
+        const res = await axios.post('http://16.171.196.132:3000/purchase/updatetransactionstatus',{
             order_id: options.order_id,
             payment_id: response.razorpay_payment_id,
         }, { headers: {"auth" : token} })
@@ -224,7 +224,7 @@ document.getElementById('premium').onclick = async function (e) {
 
   rzp1.on('payment.failed', async function (response){
     console.log(response);
-    await axios.post('http://localhost:3000/purchase/updateTransactionFailedStatus',{
+    await axios.post('http://16.171.196.132:3000/purchase/updateTransactionFailedStatus',{
             order_id: options.order_id},{ headers: {"auth" : token} })
     alert('Something went wrong')
   });

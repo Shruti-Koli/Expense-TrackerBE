@@ -44,7 +44,7 @@
                   pass: event.target.pass.value
               }
 
-              let op = await axios.post("http://localhost:3000/user/login",myobj);
+              let op = await axios.post("http://16.171.196.132:3000/user/login",myobj);
               localStorage.setItem('token',op.data.token);
               if(op.status==201){
                 window.location.href= '../dashboard/expensesdash.html';

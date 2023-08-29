@@ -39,7 +39,7 @@
       window.addEventListener("DOMContentLoaded",async ()=>{
           try{
               const token = localStorage.getItem('token');
-              const userReportsArray = await axios.get('http://localhost:3000/premium/getoldreports', {headers:{"auth":token}})
+              const userReportsArray = await axios.get('http://16.171.196.132:3000/premium/getoldreports', {headers:{"auth":token}})
               console.log(userReportsArray.data);
   
               for(let i=0;i<userReportsArray.data.length;i++){
@@ -58,7 +58,7 @@
               const token = localStorage.getItem('token');
               console.log("requested");
               console.log(token)
-              const userReport = await axios.get('http://localhost:3000/premium/getfile', {headers:{"auth":token}})
+              const userReport = await axios.get('http://16.171.196.132:3000/premium/getfile', {headers:{"auth":token}})
               //console.log(userReport.data);
               const time = userReport.data.prevdata.updatedAt.substring(0,16).replace("T", " ");
               const url = userReport.data.fileURL

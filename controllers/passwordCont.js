@@ -39,7 +39,7 @@ exports.forgotPassword = async (req, res) => {
             subject: 'Reset Password ',
             textContent: `Follow the link to reset the password `,
             htmlContent: `<h1>click on the link below to reset the password</h1><br>
-                <a href="http://localhost:3000/password/resetpassword/${id}">Reset your Password</a>`
+                <a href="http://16.171.196.132:3000/password/resetpassword/${id}">Reset your Password</a>`
             }).then( (response) => {
                 return res.status(202).json({success: true, message: "password mail sent Successful"});
             }).catch(err => console.log(err)) 
@@ -173,7 +173,7 @@ exports.resetPassword = async (req, res) => {
                                         let pass = {
                                           pass: event.target.newpassword.value
                                           }
-                                          let op = await axios.post("http://localhost:3000/password/updatepassword/${id}",pass);
+                                          let op = await axios.post("http://16.171.196.132:3000/password/updatepassword/${id}",pass);
                                           if(op.status==201){
                                             alert('Password Reset Successfully');
                                             window.close();

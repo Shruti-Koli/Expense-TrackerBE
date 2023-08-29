@@ -34,7 +34,7 @@
         try{
             const token = localStorage.getItem('token')
             console.log(token)
-            const userLeaderBoardArray = await axios.get('http://localhost:3000/premium/showLeaderBoard', {headers:{"auth":token}})
+            const userLeaderBoardArray = await axios.get('http://16.171.196.132:3000/premium/showLeaderBoard', {headers:{"auth":token}})
             console.log(userLeaderBoardArray.data);
 
             for(let i=0;i<userLeaderBoardArray.data.length;i++){
